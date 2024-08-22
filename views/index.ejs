@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script src="./index.js"></script>
+</head>
+
+<body>
+    <div class="main-menu-system-0123" id="main-menu-system-0123">
+        <img src="./gnome-ico/cop.svg" alt="" class="close">
+        <div class="search"><input type="text" id="search-in-applications" placeholder="Search Here For Applications">
+        </div>
+        <div class="app-ss-system-0123"></div>
+    </div>
+    <div class="main-window-system-0123">
+        <div class="taskbar-system-0123">
+            <div class="app-system-0123"></div>
+            <div class="tasks-system-0123">
+                <h1 class="date-system-0123"></h1>
+            </div>
+            <div class="info-system-0123"></div>
+        </div>
+        <div class="desktop-system-0123">
+
+        </div>
+    </div>
+    <div class="apps-system-back-0123"><img src="./gnome-ico/apps.svg" class="apps-ico"></div>
+</body>
+<script class="server-node">
+    let list = JSON.parse('<%-applicationslist%>')
+    list.forEach(e => {
+
+        $('.app-ss-system-0123').append(`<div class='application-system-0123' data-path='${e.path}' data-main='${e.main_function}'>
+                                                <img class='appico-system-0123' src='${e.ico}'><h3 class="application-label-sys">${e.name}</h3>
+                                                
+                                            </div>`)
+        $('.apps-system-back-0123').append(`<img src='${e.ico}' class='application' data-path='${e.path}' data-main='${e.main_function}'>`)
+    });
+    const none = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    let time = new Date
+    let mounth = time.getMonth()
+    let hours = time.getHours()
+    let mins = time.getMinutes()
+    let day = time.getDate()
+    $('.date-system-0123').text(`${day} ${none[mounth]} ${hours}:${mins}`)
+    async function time_update_per_min() {
+        setTimeout(() => {
+            const none = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            let time = new Date
+            let mounth = time.getMonth()
+            let hours = time.getHours()
+            let mins = time.getMinutes()
+            let day = time.getDate()
+            $('.date-system-0123').text(`${day} ${none[mounth]} ${hours}:${mins}`)
+            time_update_per_min()
+        }, 60 - time.getSeconds() * 1000);
+    }
+    time_update_per_min()
+
+
+</script>
+
+</html>

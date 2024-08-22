@@ -1,0 +1,5 @@
+{
+    "name" : "Notepad",
+    "path" : "./applications/notepad/application.html",
+    "ico"  : "./applications/notepad/ico.svg"
+}

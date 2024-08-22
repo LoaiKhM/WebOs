@@ -1,0 +1,5 @@
+{
+    "name" : "File Explorer",
+    "path" : "./applications/fileloading/application.html",
+    "ico"  : "./applications/fileloading/filemang.svg"
+}

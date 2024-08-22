@@ -1,0 +1,5 @@
+{
+    "name" : "Hello Application",
+    "path" : "./applications/app2/application.html",
+    "ico"  : "./applications/app2/ico.svg"
+}

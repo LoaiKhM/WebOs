@@ -62,17 +62,23 @@
     <script class="application-script">
 
         function main_window() {
+            let path = [ ]
 
             let cwd = '';
-
+            let paths = [ ]
             async function getFolders(path) {
-                const folders = await fetch(`/?path=${path}`, { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ path: path }) })
-                console.error(cwd)
-
+                let folders = await fetch(`/?path=${path}`, { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ path: path }) })
+                if (folders.ok){
+                    paths.push(path)
+                    console.log(true)
+                }
+                console.error(cwd,paths)
+                
                 return folders;
             }
+
             async function first() {
-                let root = await getFolders('./')
+                let root = await getFolders('./,')
                 let resp = await root.json()
                 cwd = resp.cwd
                 $('.path-inp').val(cwd.replace('./', '\\'));
@@ -108,16 +114,16 @@
                     const folder = $(this).text();
 
 
-
-                    const data = await getFolders(`${cwd}\\${folder}`);
+                    console.log(`${cwd}\\${folder}`)
+                    const data = await getFolders(`${cwd},${folder}`);
                     let resp = await data.json();
 
                     cwd = resp.cwd;
                     // تحديث مسار العرض
                     $('.path-inp').val('');  // مسح المسار السابق
-                    console.clear()
+
                     console.log(cwd)
-                    $('.path-inp').val(cwd.replace('./', ''));
+                    $('.path-inp').val(cwd);
 
                     console.log(resp);
 
@@ -135,7 +141,7 @@
             $('.path-inp').on('keypress', async function (event) {
                 if (event.key == 'Enter') {
                     console.error(1, 1, $(this).val().split('')[0], $(this).val().split('')[0] == '\\' ? $(this).val().replace('\\', './') : $(this).val())
-                    let resp = await getFolders($(this).val())
+                    let resp = await getFolders(`${$(this).val()},`)
                     resp = await resp.json()
                     cwd = resp.cwd;
                     $('.path-inp').val($(this).val());

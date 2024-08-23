@@ -1,6 +1,7 @@
 const express = require('express')
 const ejs = require('ejs')
 const { Dirent } = require('fs')
+const pat = require('path')
 const app = express()
 const fs = require('fs').promises
 
@@ -40,25 +41,11 @@ app.get('/', async (req, res) => {
     res.render('./index.ejs',{applicationslist :  JSON.stringify(applicationslist)})
 })
 app.post('/',async (req,res)=>{
-    let path = req.body.path
+    console.log(true);
     
-    
-    const dir = await fs.opendir(path)
-    let diri = await dir.read()
-    const dirlist = [ ]
-    const filelist = [ ]
-    while (diri){
-        if(diri.isDirectory()){
-            dirlist.push(diri.name)
-            diri = await dir.read()
-        }else if(diri.isFile()){
-            filelist.push(diri.name)
-            diri = await dir.read()
-        }
+    const getApplication0123 = require('./public/applications/fileloading/serverside')
+    const f = getApplication0123(req,res,pat,fs)
 
-    }
-    console.log(`${path}`)
-    res.send({dir: dirlist,file:filelist,cwd :path})
 })
 process.on('uncaughtException', function (error, orgin) {
     console.log(error, orgin)

@@ -1,4 +1,4 @@
-<section class="window" data-width="800px" data-height="600px" data-top="100px" data-left="10px"
+<section class="window-system2024" data-width="800px" data-height="600px" data-top="100px" data-left="10px"
     style="background-color: white;">
     <div style="width:100%;height:100%;background:white;color:white;">
 
@@ -14,7 +14,7 @@
             <div class="movemento">
                 <div class="path"><img src="./applications/fileloading/goback.svg"
                         style="margin-left:2px;margin-right: 10px;" class="goback"><img src="./applications/fileloading/gofroward.svg"
-                        style="margin-right: 10px;"><input type="text" class="path-inp" class="gofroward" style="
+                        style="margin-right: 10px;" class="gofroward" ><input type="text" class="path-inp"style="
                     width: 100%;
                     outline: 0;
                     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -63,21 +63,20 @@
 
         function main_window() {
             let path = [ ]
-            let lstindex;
-            let fstindex;
+            let c;
             let cwd = '';
             let paths = [ ]
             async function getFolders(get,path) {
                 let folders = await fetch(`/?path=${path}`, { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ path: path }) })
                 let last = paths.pop()
-                paths.push(last)
+                typeof last !=="undefined" ?paths.push(last) : ''
                 if (folders.ok && !get && last !== path){
                     paths.push(path)
                     console.log(true)
+                    c  = paths.length - 1 
                 }
 
-                lstindex =  paths.length - 2
-                fstindex = 0
+
                 console.error(cwd,paths)
                 
                 return folders;
@@ -99,11 +98,11 @@
             }
             first()
             console.error(cwd)
-            $(document).on('click', '[data-class="file"]', function (event) {
+            $('.window-system2024').on('click', '[data-class="file"]', function (event) {
                 console.log('click');
 
-                $('[data-class="file"]').find('p').find('b').css('background', 'transparent')
-                $('[data-class="file"]').find('p').find('b').css('color', 'black')
+                $('.window-system2024').find('[data-class="file"]').find('p').find('b').css('background', 'transparent')
+                $('.window-system2024').find('[data-class="file"]').find('p').find('b').css('color', 'black')
 
 
 
@@ -115,7 +114,7 @@
 
 
             })
-            $(document).off('dblclick', '[data-class="file"]').on('dblclick', '[data-class="file"]', async function () {
+            $('.window-system2024').off('dblclick', '[data-class="file"]').on('dblclick', '[data-class="file"]', async function () {
                 if ($(this).attr('class') === 'dir-0123') {
                     const folder = $(this).text();
 
@@ -126,38 +125,38 @@
 
                     cwd = resp.cwd;
                     // تحديث مسار العرض
-                    $('.path-inp').val('');  // مسح المسار السابق
+                    $('.window-system2024').find('.path-inp').val('');  // مسح المسار السابق
 
                     console.log(cwd)
-                    $('.path-inp').val(cwd);
+                    $('.window-system2024').find('.path-inp').val(cwd);
 
                     console.log(resp);
 
                     // مسح المحتويات السابقة وإضافة المحتويات الجديدة
-                    $('.dirs')[0].innerHTML = '';
+                    $('.window-system2024').find('.dirs')[0].innerHTML = '';
                     resp.dir.forEach(e => {
-                        $('.dirs').append(`<div data-class='file' class='dir-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/folder.svg'><p style='color:black;font-family:sans-serif;text-align: center; width: 120px;word-wrap: break-word;' class='dir-filesystem-0123'><b>${e}</b></p></div>`)
+                        $('.window-system2024').find('.dirs').append(`<div data-class='file' class='dir-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/folder.svg'><p style='color:black;font-family:sans-serif;text-align: center; width: 120px;word-wrap: break-word;' class='dir-filesystem-0123'><b>${e}</b></p></div>`)
                     });
                     resp.file.forEach(e => {
-                        $('.dirs').append(`<div data-class='file' class='file-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/file.svg'><p style='color:black;font-family:sans-serif;text-align: center;width: 120px;word-wrap: break-word;' class='file-filesystem-0123'><b>${e}</b></p></div>`)
+                        $('.window-system2024').find('.dirs').append(`<div data-class='file' class='file-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/file.svg'><p style='color:black;font-family:sans-serif;text-align: center;width: 120px;word-wrap: break-word;' class='file-filesystem-0123'><b>${e}</b></p></div>`)
 
                     })
                 }
             });
-            $('.path-inp').on('keypress', async function (event) {
+            $('.window-system2024').find('.path-inp').on('keypress', async function (event) {
                 if (event.key == 'Enter') {
                     console.error(1, 1, $(this).val().split('')[0], $(this).val().split('')[0] == '\\' ? $(this).val().replace('\\', './') : $(this).val())
                     let resp = await getFolders(false,`${$(this).val()},`)
                     resp = await resp.json()
                     cwd = resp.cwd;
-                    $('.path-inp').val($(this).val());
+                    $('.window-system2024').find('.path-inp').val($(this).val());
 
-                    $('.dirs')[0].innerHTML = '';
+                    $('.window-system2024').find('.dirs')[0].innerHTML = '';
                     resp.dir.forEach(e => {
-                        $('.dirs').append(`<div data-class='file' class='dir-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/folder.svg'><p style='color:black;font-family:sans-serif;text-align: center; width: 120px;word-wrap: break-word;' class='dir-filesystem-0123'><b>${e}</b></p></div>`)
+                        $('.window-system2024').find('.dirs').append(`<div data-class='file' class='dir-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/folder.svg'><p style='color:black;font-family:sans-serif;text-align: center; width: 120px;word-wrap: break-word;' class='dir-filesystem-0123'><b>${e}</b></p></div>`)
                     });
                     resp.file.forEach(e => {
-                        $('.dirs').append(`<div data-class='file' class='file-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/file.svg'><p style='color:black;font-family:sans-serif;text-align: center;width: 120px;word-wrap: break-word;' class='file-filesystem-0123'><b>${e}</b></p></div>`)
+                        $('.window-system2024').find('.dirs').append(`<div data-class='file' class='file-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/file.svg'><p style='color:black;font-family:sans-serif;text-align: center;width: 120px;word-wrap: break-word;' class='file-filesystem-0123'><b>${e}</b></p></div>`)
 
                     })
                 }
@@ -166,28 +165,28 @@
                 let resp = await getFolders(false,'public,Downloads')
                 resp = await resp.json()
                 cwd = resp.cwd;
-                $('.path-inp').val(cwd)
-                $('.dirs')[0].innerHTML = '';
+                $('.window-system2024').find('.path-inp').val(cwd)
+                $('.window-system2024').find('.dirs')[0].innerHTML = '';
                     resp.dir.forEach(e => {
-                        $('.dirs').append(`<div data-class='file' class='dir-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/folder.svg'><p style='color:black;font-family:sans-serif;text-align: center; width: 120px;word-wrap: break-word;' class='dir-filesystem-0123'><b>${e}</b></p></div>`)
+                        $('.window-system2024').find('.dirs').append(`<div data-class='file' class='dir-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/folder.svg'><p style='color:black;font-family:sans-serif;text-align: center; width: 120px;word-wrap: break-word;' class='dir-filesystem-0123'><b>${e}</b></p></div>`)
                     });
                     resp.file.forEach(e => {
-                        $('.dirs').append(`<div data-class='file' class='file-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/file.svg'><p style='color:black;font-family:sans-serif;text-align: center;width: 120px;word-wrap: break-word;' class='file-filesystem-0123'><b>${e}</b></p></div>`)
+                        $('.window-system2024').find('.dirs').append(`<div data-class='file' class='file-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/file.svg'><p style='color:black;font-family:sans-serif;text-align: center;width: 120px;word-wrap: break-word;' class='file-filesystem-0123'><b>${e}</b></p></div>`)
 
                     })
             })
-            $('.system').on('click',async function(){
+            $('.window-system2024').find('.system').on('click',async function(){
                 let resp = await getFolders(false,'./,')
                 resp = await resp.json()
                 cwd = resp.cwd;
                 console.error(cwd)
-                $('.path-inp').val(cwd.replace('./','\\'))
-                $('.dirs')[0].innerHTML = '';
+                $('.window-system2024').find('.path-inp').val(cwd.replace('./','\\'))
+                $('.window-system2024').find('.dirs')[0].innerHTML = '';
                     resp.dir.forEach(e => {
-                        $('.dirs').append(`<div data-class='file' class='dir-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/folder.svg'><p style='color:black;font-family:sans-serif;text-align: center; width: 120px;word-wrap: break-word;' class='dir-filesystem-0123'><b>${e}</b></p></div>`)
+                        $('.window-system2024').find('.dirs').append(`<div data-class='file' class='dir-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/folder.svg'><p style='color:black;font-family:sans-serif;text-align: center; width: 120px;word-wrap: break-word;' class='dir-filesystem-0123'><b>${e}</b></p></div>`)
                     });
                     resp.file.forEach(e => {
-                        $('.dirs').append(`<div data-class='file' class='file-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/file.svg'><p style='color:black;font-family:sans-serif;text-align: center;width: 120px;word-wrap: break-word;' class='file-filesystem-0123'><b>${e}</b></p></div>`)
+                        $('.window-system2024').find('.dirs').append(`<div data-class='file' class='file-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/file.svg'><p style='color:black;font-family:sans-serif;text-align: center;width: 120px;word-wrap: break-word;' class='file-filesystem-0123'><b>${e}</b></p></div>`)
 
                     })
             })
@@ -195,56 +194,58 @@
                 let resp = await getFolders(false,'public,Photos')
                 resp = await resp.json()
                 cwd = resp.cwd;
-                $('.path-inp').val(cwd)
-                $('.dirs')[0].innerHTML = '';
+                $('.window-system2024').find('.path-inp').val(cwd)
+                $('.window-system2024').find('.dirs')[0].innerHTML = '';
                     resp.dir.forEach(e => {
-                        $('.dirs').append(`<div data-class='file' class='dir-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/folder.svg'><p style='color:black;font-family:sans-serif;text-align: center; width: 120px;word-wrap: break-word;' class='dir-filesystem-0123'><b>${e}</b></p></div>`)
+                        $('.window-system2024').find('.dirs').append(`<div data-class='file' class='dir-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/folder.svg'><p style='color:black;font-family:sans-serif;text-align: center; width: 120px;word-wrap: break-word;' class='dir-filesystem-0123'><b>${e}</b></p></div>`)
                     });
                     resp.file.forEach(e => {
-                        $('.dirs').append(`<div data-class='file' class='file-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/file.svg'><p style='color:black;font-family:sans-serif;text-align: center;width: 120px;word-wrap: break-word;' class='file-filesystem-0123'><b>${e}</b></p></div>`)
+                        $('.window-system2024').find('.dirs').append(`<div data-class='file' class='file-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/file.svg'><p style='color:black;font-family:sans-serif;text-align: center;width: 120px;word-wrap: break-word;' class='file-filesystem-0123'><b>${e}</b></p></div>`)
 
                     })
             })
-            $('.camera').on('click',async function(){
+            $('.window-system2024').find('.camera').on('click',async function(){
                 let resp = await getFolders(false,'public,Videos')
                 resp = await resp.json()
                 cwd = resp.cwd;
-                $('.path-inp').val(cwd)
-                $('.dirs')[0].innerHTML = '';
+                $('.window-system2024').find('.path-inp').val(cwd)
+                $('.window-system2024').find('.dirs')[0].innerHTML = '';
                     resp.dir.forEach(e => {
-                        $('.dirs').append(`<div data-class='file' class='dir-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/folder.svg'><p style='color:black;font-family:sans-serif;text-align: center; width: 120px;word-wrap: break-word;' class='dir-filesystem-0123'><b>${e}</b></p></div>`)
+                        $('.window-system2024').find('.dirs').append(`<div data-class='file' class='dir-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/folder.svg'><p style='color:black;font-family:sans-serif;text-align: center; width: 120px;word-wrap: break-word;' class='dir-filesystem-0123'><b>${e}</b></p></div>`)
                     });
                     resp.file.forEach(e => {
-                        $('.dirs').append(`<div data-class='file' class='file-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/file.svg'><p style='color:black;font-family:sans-serif;text-align: center;width: 120px;word-wrap: break-word;' class='file-filesystem-0123'><b>${e}</b></p></div>`)
+                        $('.window-system2024').find('.dirs').append(`<div data-class='file' class='file-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/file.svg'><p style='color:black;font-family:sans-serif;text-align: center;width: 120px;word-wrap: break-word;' class='file-filesystem-0123'><b>${e}</b></p></div>`)
 
                     })
             })
-            $('.goback').on('click',async function(){
-                let resp = await getFolders(true,paths[lstindex])
-                lstindex --
+            $('.window-system2024').find('.goback').on('click',async function(){
+                c !== 0 ? c -- :  c = c;  
+                let resp = await getFolders(true,paths[c])
+
                 resp = await resp.json()
                 cwd = resp.cwd;
-                $('.path-inp').val(cwd)
-                $('.dirs')[0].innerHTML = '';
+                $('.window-system2024').find('.path-inp').val(cwd)
+                $('.window-system2024').find('.dirs')[0].innerHTML = '';
                     resp.dir.forEach(e => {
-                        $('.dirs').append(`<div data-class='file' class='dir-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/folder.svg'><p style='color:black;font-family:sans-serif;text-align: center; width: 120px;word-wrap: break-word;' class='dir-filesystem-0123'><b>${e}</b></p></div>`)
+                        $('.window-system2024').find('.dirs').append(`<div data-class='file' class='dir-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/folder.svg'><p style='color:black;font-family:sans-serif;text-align: center; width: 120px;word-wrap: break-word;' class='dir-filesystem-0123'><b>${e}</b></p></div>`)
                     });
                     resp.file.forEach(e => {
-                        $('.dirs').append(`<div data-class='file' class='file-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/file.svg'><p style='color:black;font-family:sans-serif;text-align: center;width: 120px;word-wrap: break-word;' class='file-filesystem-0123'><b>${e}</b></p></div>`)
+                        $('.window-system2024').find('.dirs').append(`<div data-class='file' class='file-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/file.svg'><p style='color:black;font-family:sans-serif;text-align: center;width: 120px;word-wrap: break-word;' class='file-filesystem-0123'><b>${e}</b></p></div>`)
 
                     })
             })
-            $('.gofroward').on('click',async function(){
-                let resp = await getFolders(true,paths[lstindex + 1])
+            $('.window-system2024').find('.gofroward').on('click',async function(){
+                paths.length - 1 !== c ? c ++ :c = c
+                let resp = await getFolders(true,paths[c])
                 resp = await resp.json()
                 cwd = resp.cwd;
-                $('.path-inp').val(cwd)
-                $('.dirs')[0].innerHTML = '';
+                $('.window-system2024').find('.path-inp').val(cwd)
+                $('.window-system2024').find('.dirs')[0].innerHTML = '';
                     resp.dir.forEach(e => {
-                        $('.dirs').append(`<div data-class='file' class='dir-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/folder.svg'><p style='color:black;font-family:sans-serif;text-align: center; width: 120px;word-wrap: break-word;' class='dir-filesystem-0123'><b>${e}</b></p></div>`)
+                        $('.window-system2024').find('.dirs').append(`<div data-class='file' class='dir-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/folder.svg'><p style='color:black;font-family:sans-serif;text-align: center; width: 120px;word-wrap: break-word;' class='dir-filesystem-0123'><b>${e}</b></p></div>`)
                     });
                     resp.file.forEach(e => {
-                        $('.dirs').append(`<div data-class='file' class='file-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/file.svg'><p style='color:black;font-family:sans-serif;text-align: center;width: 120px;word-wrap: break-word;' class='file-filesystem-0123'><b>${e}</b></p></div>`)
+                        $('.window-system2024').find('.dirs').append(`<div data-class='file' class='file-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/file.svg'><p style='color:black;font-family:sans-serif;text-align: center;width: 120px;word-wrap: break-word;' class='file-filesystem-0123'><b>${e}</b></p></div>`)
 
                     })
             })

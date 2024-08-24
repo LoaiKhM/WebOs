@@ -1,3 +1,5 @@
+
+let pids = [ ] // running applications main_functions_{Pids}()
 $(document).ready(function () {
     $('.apps-ico').click(function(event){
         event.stopPropagation()
@@ -20,16 +22,21 @@ $(document).on('click','.application-system-0123',async function(){
     const path = $(this).data('path')
     const ext = await fetch(path)
     const resp = await ext.text()
-    $(".desktop-system-0123").append(resp)
-    const width = $('.window').last().data('width')
-    const height = $('.window').last().data('height')
-    const title = $('.window').last().data('title')
-    const top = $('.window').last().data('top')
-    const left = $('.window').last().data('left')
-    $('.window').last().css('height',height)
-    $('.window').last().css('width',width)
-    $('.window').last().css('top',top)
-    $('.window').last().css('left',left)
+    let pid = Date.now() + 100
+    const rep = resp.replaceAll('main_window',`main_window_${pid}`)
+    console.log(rep)
+    pids.push(pid)
+
+    $(".desktop-system-0123").append(rep)
+    const width = $('.window-system2024').last().data('width')
+    const height = $('.window-system2024').last().data('height')
+    const title = $('.window-system2024').last().data('title')
+    const top = $('.window-system2024').last().data('top')
+    const left = $('.window-system2024').last().data('left')
+    $('.window-system2024').last().css('height',height)
+    $('.window-system2024').last().css('width',width)
+    $('.window-system2024').last().css('top',top)
+    $('.window-system2024').last().css('left',left)
 
     
 
@@ -38,17 +45,22 @@ $(document).on('click','.application',async function(){
     const path = $(this).data('path')
     const ext = await fetch(path)
     const resp = await ext.text()
-    $(".desktop-system-0123").append(resp)
+    let pid = Date.now() + 100
+    const rep = resp.replaceAll('main_window()',`main_window_${pid}()`)
+    pids.push(pid)
+    console.log(rep)
 
-    const width = $('.window').last().data('width')
-    const height = $('.window').last().data('height')
-    const title = $('.window').last().data('title')
-    const top = $('.window').last().data('top')
-    const left = $('.window').last().data('left')
-    $('.window').last().css('height',height)
-    $('.window').last().css('width',width)
-    $('.window').last().css('top',top)
-    $('.window').last().css('left',left)
+    $(".desktop-system-0123").append(rep)
+
+    const width = $('.window-system2024').last().data('width')
+    const height = $('.window-system2024').last().data('height')
+    const title = $('.window-system2024').last().data('title')
+    const top = $('.window-system2024').last().data('top')
+    const left = $('.window-system2024').last().data('left')
+    $('.window-system2024').last().css('height',height)
+    $('.window-system2024').last().css('width',width)
+    $('.window-system2024').last().css('top',top)
+    $('.window-system2024').last().css('left',left)
 
     
 
@@ -60,13 +72,13 @@ $(document).on('mousedown', '.useful-toolbar', function(event) {
 
     $(document).on('mousemove.dragging', function(event) {
         console.log(true);
-        $('.window').css('z-index',0)
-        toolbar.closest('.window').css('z-index',100)
+        $('.window-system2024').css('z-index',0)
+        toolbar.closest('.window-system2024').css('z-index',100)
 
         console.log(x, y);
 
-        toolbar.closest('.window').css('top', `${event.clientY - y}px`);
-        toolbar.closest('.window').css('left', `${event.clientX - x}px`);
+        toolbar.closest('.window-system2024').css('top', `${event.clientY - y}px`);
+        toolbar.closest('.window-system2024').css('left', `${event.clientX - x}px`);
     });
 
     $(document).on('mouseup', function() {
@@ -78,19 +90,19 @@ $(document).on('mousedown', '.useful-toolbar', function(event) {
 $(document).on('click','.close-system-window',function(){
 
     $(this).closest('script').remove()
-    $(this).closest('.window').remove()
+    $(this).closest('.window-system2024').remove()
 
 })
 $(document).on('click','.chgres-system-window',function(event){
     
-    const width = $(this).closest('.window')[0].style.width
-    const height = $(this).closest('.window')[0].style.height
-    const top = $(this).closest('.window')[0].style.top
-    const left = $(this).closest('.window')[0].style.left
-    $(this).closest('.window').css('width','100%')
-    $(this).closest('.window').css('height','100%')
-    $(this).closest('.window').css('left','0')
-    $(this).closest('.window').css('top','0')
+    const width = $(this).closest('.window-system2024')[0].style.width
+    const height = $(this).closest('.window-system2024')[0].style.height
+    const top = $(this).closest('.window-system2024')[0].style.top
+    const left = $(this).closest('.window-system2024')[0].style.left
+    $(this).closest('.window-system2024').css('width','100%')
+    $(this).closest('.window-system2024').css('height','100%')
+    $(this).closest('.window-system2024').css('left','0')
+    $(this).closest('.window-system2024').css('top','0')
 
 
 
@@ -98,11 +110,11 @@ $(document).on('click','.chgres-system-window',function(event){
         event.stopPropagation()
 
         console.log(width,height)
-        $(this).closest('.window').css('width',`${width}`)
-        $(this).closest('.window').css('height',`${height}`)
-        $(this).closest('.window').css('position','fixed')
-        $(this).closest('.window').css('left',left)
-        $(this).closest('.window').css('top',top)
+        $(this).closest('.window-system2024').css('width',`${width}`)
+        $(this).closest('.window-system2024').css('height',`${height}`)
+        $(this).closest('.window-system2024').css('position','fixed')
+        $(this).closest('.window-system2024').css('left',left)
+        $(this).closest('.window-system2024').css('top',top)
         
     })
 })

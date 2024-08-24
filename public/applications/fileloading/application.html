@@ -1,4 +1,4 @@
-<section class="window-system2024" data-width="800px" data-height="600px" data-top="100px" data-left="10px"
+<section data-sec='window-2024' id='windowsystem2024s' class="window-system2024" data-width="800px" data-height="600px" data-top="100px" data-left="10px"
     style="background-color: white;">
     <div style="width:100%;height:100%;background:white;color:white;">
 
@@ -86,13 +86,13 @@
                 let root = await getFolders(false,'./,')
                 let resp = await root.json()
                 cwd = resp.cwd
-                $('.path-inp').val(cwd.replace('./', '\\'));
+                $('.window-system2024').find('.path-inp').val(cwd.replace('./', '\\'));
 
                 resp.dir.forEach(e => {
-                    $('.dirs').append(`<div data-class='file' class='dir-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/folder.svg'><p style='color:black;font-family:sans-serif;text-align: center; width: 120px;word-wrap: break-word;' class='dir-filesystem-0123'><b>${e}</b></p></div>`)
+                    $('.window-system2024').find('.dirs').append(`<div data-class='file' class='dir-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/folder.svg'><p style='color:black;font-family:sans-serif;text-align: center; width: 120px;word-wrap: break-word;' class='dir-filesystem-0123'><b>${e}</b></p></div>`)
                 });
                 resp.file.forEach(e => {
-                    $('.dirs').append(`<div data-class='file' class='file-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/file.svg'><p style='color:black;font-family:sans-serif;text-align: center;width: 120px;word-wrap: break-word;' class='file-filesystem-0123'><b>${e}</b></p></div>`)
+                    $('.window-system2024').find('.dirs').append(`<div data-class='file' class='file-0123'><img class='ico-sys-file-0123' src='./applications/fileloading/file.svg'><p style='color:black;font-family:sans-serif;text-align: center;width: 120px;word-wrap: break-word;' class='file-filesystem-0123'><b>${e}</b></p></div>`)
 
                 })
             }

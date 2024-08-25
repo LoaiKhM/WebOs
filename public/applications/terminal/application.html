@@ -46,13 +46,28 @@
                 }
             }
             $('.window-system2024').find('.stdii').val('hello@loai:-$ ')
-            let spaces = $('.window-system2024').find('.stdii').val().length
+            $('.window-system2024').find('.stdii').on('input',function(event){
+                
+                let len = $(this).val().split('hello@loai:-$ ')
+                console.log(len.length)
+                if(len.length < 2){
+                    setTimeout(() => {
+                        $('.window-system2024').find('.stdii').val('hello@loai:-$ ')
+
+                    }, 1);
+
+                    
+                    
+
+                }
+            })
             $('.window-system2024').find('.stdii').on('keydown',function(event){
-                len = $(this).val()
-                if(len.length <= spaces){
+                let len = $(this).val().split('hello@loai:-$ ')
+                if(len.length < 2){
                     disable_backspace(event)
 
                 }
+
             })
 
 

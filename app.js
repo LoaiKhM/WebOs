@@ -44,7 +44,7 @@ app.post('/',async (req,res)=>{
     console.log(true);
     
     const getApplication0123 = require('./public/applications/fileloading/serverside')
-    const f = getApplication0123(req,res,pat,fs)
+    getApplication0123(req,res,pat,fs)
 
 })
 process.on('uncaughtException', function (error, orgin) {

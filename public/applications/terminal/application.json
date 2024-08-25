@@ -1,0 +1,5 @@
+{
+    "name" : "Terminal",
+    "path" : "./applications/terminal/application.html",
+    "ico"  : "./applications/terminal/terminal.svg"
+}

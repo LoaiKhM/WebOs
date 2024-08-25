@@ -41,9 +41,10 @@ body,html{
     position: fixed;
     top: 37%;
     left: 30%;
-    padding: 0 0 10px 0;
+    padding: 4px 0 10px 0;
     background: #333;
-    border-radius:10px;
+    border-radius: 5px;
+    box-shadow: black 1px 1px 20px;
 }
 .application-system-0123{
     color: white;

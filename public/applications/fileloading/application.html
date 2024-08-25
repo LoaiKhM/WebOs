@@ -67,7 +67,7 @@
             let cwd = '';
             let paths = [ ]
             async function getFolders(get,path) {
-                let folders = await fetch(`/?path=${path}`, { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ path: path }) })
+                let folders = await fetch(`/?path=${path}`, { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ path: path,serv:0 }) })
                 let last = paths.pop()
                 typeof last !=="undefined" ?paths.push(last) : ''
                 if (folders.ok && !get && last !== path){

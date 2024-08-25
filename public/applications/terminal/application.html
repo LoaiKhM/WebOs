@@ -22,20 +22,43 @@
     height: 95%;
     overflow: hidden;
     overflow-y: scroll;
-    width: 100%;
     background: rgba(0, 0, 0, 0.6);
-    border-radius: 0px 0px 0px 5px;"><div class="stdin" style="display: flex;flex-direction:row;align-items: center;"><p style='
-    color: white;
-    font-family: sans-serif;
-    letter-spacing: 2px;
-    font-size: 18px;'>Loai@pc:-$ </p><textarea  style="
+    border-radius: 0px 0px 0px 5px;"><div class="stdin" style="display: flex;flex-direction:row;height:100%;"><textarea  style="
     background: transparent;
     border: 0;
+    height:99%;
     outline: 0;
+    word-break: break-all;
     font-family:sans-serif;
     width:100%;
+    resize:none;
     color: white;
     font-size: 18px;
-    letter-spacing: 2px;"></textarea></div></div>
+    letter-spacing: 2px;" class="stdii"></textarea></div></div>
     
+    <script class="application-script">
+        function main_window(){
+            function disable_backspace(event){
+                console.log(event)
+                if (event.key == 'Backspace'){
+                    event.preventDefault()
+                    console.log('running')
+                }
+            }
+            $('.window-system2024').find('.stdii').val('hello@loai:-$ ')
+            let spaces = $('.window-system2024').find('.stdii').val().length
+            $('.window-system2024').find('.stdii').on('keydown',function(event){
+                len = $(this).val()
+                if(len.length <= spaces){
+                    disable_backspace(event)
+
+                }
+            })
+
+
+
+        
+        }
+        main_window()
+    </script>
 </section>

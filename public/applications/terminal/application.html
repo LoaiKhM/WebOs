@@ -1,5 +1,5 @@
-<section data-sec='window-2024' id='windowsystem2024s' class="window-system2024" data-width="600px" data-height="400px" data-top="100px" data-left="10px"
-    style="background: transparent;">
+<section data-sec='window-2024' id='windowsystem2024s' class="window-system2024" data-width="600px" data-height="400px"
+    data-top="100px" data-left="10px" style="background: transparent;">
     <div style="
     width: 100%;
     height: auto;
@@ -23,7 +23,8 @@
     overflow: hidden;
     overflow-y: scroll;
     background: rgba(0, 0, 0, 0.6);
-    border-radius: 0px 0px 0px 5px;"><div class="stdin" style="display: flex;flex-direction:row;height:100%;"><textarea  style="
+    border-radius: 0px 0px 0px 5px;">
+        <div class="stdin" style="display: flex;flex-direction:row;height:100%;"><textarea style="
     background: transparent;
     border: 0;
     height:99%;
@@ -34,45 +35,41 @@
     resize:none;
     color: white;
     font-size: 18px;
-    letter-spacing: 2px;" class="stdii"></textarea></div></div>
-    
+    letter-spacing: 2px;" class="stdii"></textarea></div>
+    </div>
+
     <script class="application-script">
-        function main_window(){
-            function disable_backspace(event){
+        function main_window() {
+
+            function disable_backspace(event) {
                 console.log(event)
-                if (event.key == 'Backspace'){
+                if (event.key == 'Backspace') {
                     event.preventDefault()
                     console.log('running')
                 }
             }
             $('.window-system2024').find('.stdii').val('hello@loai:-$ ')
-            $('.window-system2024').find('.stdii').on('input',function(event){
-                
+            $('.window-system2024').find('.stdii').on('input', function (event) {
+
                 let len = $(this).val().split('hello@loai:-$ ')
                 console.log(len.length)
-                if(len.length < 2){
+                if (len.length < 2) {
                     setTimeout(() => {
                         $('.window-system2024').find('.stdii').val('hello@loai:-$ ')
 
                     }, 1);
-
-                    
-                    
-
-                }
-            })
-            $('.window-system2024').find('.stdii').on('keydown',function(event){
-                let len = $(this).val().split('hello@loai:-$ ')
-                if(len.length < 2){
-                    disable_backspace(event)
-
                 }
 
             })
-
-
-
-        
+            $('.window-system2024').find('.stdii').on('keydown', function (event) {
+                
+                if(event.key == 'Enter'){
+                    let len = $(this).val().split('hello@loai:-$ ')[1]
+                    let fetch
+                    
+                    
+                }
+            })
         }
         main_window()
     </script>

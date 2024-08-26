@@ -61,11 +61,21 @@
                 }
 
             })
-            $('.window-system2024').find('.stdii').on('keydown', function (event) {
+            $('.window-system2024').find('.stdii').on('keydown', async function (event) {
                 
                 if(event.key == 'Enter'){
                     let len = $(this).val().split('hello@loai:-$ ')[1]
-                    let fetch
+                    let list = len.split(' ')
+                    let first = list.shift()
+                    list = list.join(' ')
+                    list = [first, list]
+                    let fet = await fetch(`./applications/terminal/terminal-tools/${list[0]}.jst`)
+                    let text = await fet.text()
+                    text = text.replaceAll('terminal-params', `"${list[1]}"`)
+                    console.log(text)
+
+                    eval(text)
+                    
                     
                     
                 }

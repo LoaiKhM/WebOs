@@ -39,31 +39,16 @@
     </div>
 
     <script class="application-script">
-        function main_window() {
-
-            function disable_backspace(event) {
-                console.log(event)
-                if (event.key == 'Backspace') {
-                    event.preventDefault()
-                    console.log('running')
-                }
-            }
-            $('.window-system2024').find('.stdii').val('hello@loai:-$ ')
-            $('.window-system2024').find('.stdii').on('input', function (event) {
-
-                let len = $(this).val().split('hello@loai:-$ ')
-                console.log(len.length)
-                if (len.length < 2) {
-                    setTimeout(() => {
-                        $('.window-system2024').find('.stdii').val('hello@loai:-$ ')
-
-                    }, 1);
-                }
-
-            })
-            $('.window-system2024').find('.stdii').on('keydown', async function (event) {
-                
+        function inputting(){
+            $('.window-system2024').find('.stdii').off('keydown').on('keydown', async function (event) {
+            
                 if(event.key == 'Enter'){
+                    $(this).css('height','min-content')
+                    $(this).closest('.stdin').css('height',$(this).height() + $(this).scrollHeight)
+                    $(this).prop('disabled',true)
+                    $('.window-system2024').find('.therest').append(`<div class="stdin" style="display: flex;flex-direction:row;height:100%;"><textarea style="background: transparent;border: 0;height:99%;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="stdii">hello@loai:-$ </textarea></div></div>`)
+                    inputtrap()
+                    
                     let len = $(this).val().split('hello@loai:-$ ')[1]
                     let list = len.split(' ')
                     let first = list.shift()
@@ -75,11 +60,50 @@
                     console.log(text)
 
                     eval(text)
+                    inputting()
                     
                     
                     
                 }
             })
+        }
+        function inputtrap(){
+            $('.window-system2024').find('.stdii').off('input').on('input', function (event) {
+                console.log('fdddddd')
+                let len = $(this).val().split('hello@loai:-$ ')
+                console.log(len.length)
+                if (len.length < 2) {
+                    setTimeout(() => {
+                        $(this).val('hello@loai:-$ ')
+
+                    }, 1);
+                }
+
+            })
+        }
+        function append_to_window(create,point,html){
+            if(create == true){
+                $('.window-system2024').append(point)
+
+            }else{
+                $('.window-system2024').find(point).append(html)
+
+            }
+        }
+
+        function main_window() {
+
+            function disable_backspace(event) {
+                console.log(event)
+                if (event.key == 'Backspace') {
+                    event.preventDefault()
+                    console.log('running')
+                }
+            }
+            $('.window-system2024').find('.stdii').val('hello@loai:-$ ')
+            inputtrap()
+            inputting()
+
         }
         main_window()
     </script>

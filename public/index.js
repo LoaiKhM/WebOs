@@ -4,9 +4,9 @@ $(document).ready(function () {
     $('.apps-ico').click(function(event){
         event.stopPropagation()
         $('.main-menu-system-0123').css('display','flex')
-        console.log(true);
+
         $(document).on('click',function(event){
-            console.log(true,'ff')
+
             event.stopPropagation()
             const ev = document.getElementById('main-menu-system-0123')            
             if(ev !== event.target && $('.apps-ico')[0] !== event.target && $('#search-in-applications')[0] !==event.target && $('.app-ss-system-0123')[0] !== event.target){
@@ -49,7 +49,7 @@ $(document).on('click','.application',async function(){
     let pid = Date.now() + 100
     const rep = resp.replaceAll('window-system2024',`window-${pid}`)
     pids.push(pid)
-    console.log(rep)
+
 
     $(".desktop-system-0123").append(rep)
     $('.window-system2024').attr('class',`.window-${pid}`)
@@ -59,7 +59,7 @@ $(document).on('click','.application',async function(){
     const title = $(`.window-${pid}`).last().data('title')
     const top = $(`.window-${pid}`).last().data('top')
     const left = $(`.window-${pid}`).last().data('left')
-    console.log()
+
     $(`.window-${pid}`).last().css('height',height)
     $(`.window-${pid}`).last().css('width',width)
     $(`.window-${pid}`).last().css('top',top)
@@ -74,11 +74,11 @@ $(document).on('mousedown', '.useful-toolbar', function(event) {
     const y = event.clientY - toolbar.offset().top;
 
     $(document).on('mousemove.dragging', function(event) {
-        console.log(true);
+
         $('[data-sec=window-2024]').css('z-index',0)
         toolbar.closest('[data-sec=window-2024]').css('z-index',100)
 
-        console.log(x, y);
+
 
         toolbar.closest('section').css('top', `${event.clientY - y}px`);
         toolbar.closest('section').css('left', `${event.clientX - x}px`);
@@ -112,7 +112,7 @@ $(document).on('click','.chgres-system-window',function(event){
     $('.chgres-system-window').one('click',function(event){
         event.stopPropagation()
 
-        console.log(width,height)
+
         $(this).closest('section').css('width',`${width}`)
         $(this).closest('section').css('height',`${height}`)
         $(this).closest('section').css('position','fixed')

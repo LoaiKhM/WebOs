@@ -3,7 +3,7 @@ async function getApplication0123(req, res, pat, fs) {
     if (serv == 0) {
         let path = req.body.path
         path = path.split(',')
-        console.log(path);
+
 
         path = pat.join(path[0], path[1])
 
@@ -14,18 +14,18 @@ async function getApplication0123(req, res, pat, fs) {
         while (diri) {
             if (diri.isDirectory()) {
                 dirlist.push(diri.name)
-                console.log(true);
+
 
                 diri = await dir.read()
             } else if (diri.isFile()) {
-                console.log(true);
+
 
                 filelist.push(diri.name)
                 diri = await dir.read()
             }
 
         }
-        console.log(`${path}`)
+
         res.send({ dir: dirlist, file: filelist, cwd: path })
     }
 }

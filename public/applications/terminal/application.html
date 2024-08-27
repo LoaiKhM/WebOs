@@ -24,10 +24,9 @@
     overflow-y: scroll;
     background: rgba(0, 0, 0, 0.6);
     border-radius: 0px 0px 0px 5px;">
-        <div class="stdin" style="display: flex;flex-direction:row;height:100%;"><input style="
+        <div class="stdin" style="display: flex;flex-direction:column;"><input style="
     background: transparent;
     border: 0;
-    height:99%;
     outline: 0;
     word-break: break-all;
     font-family:sans-serif;
@@ -39,22 +38,27 @@
     </div>
 
     <script class="application-script">
-        function inputting(){
+        function inputting() {
             $('.window-system2024').find('.stdii').off('keydown').on('keydown', async function (event) {
-            
-                if(event.key == 'Enter'){
-                    $(this).css('height','min-content')
-                    $(this).closest('.stdin').css('height',$(this).height() + $(this).scrollHeight)
-                    $(this).prop('disabled',true)
-                    $('.window-system2024').find('.therest').append(`<div class="stdin" style="display: flex;flex-direction:row;height:100%;"><input type='text' style="background: transparent;border: 0;height:99%;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="stdii"></div></div>`)
-                    $('.window-system2024').find('.stdii').val('hello@loai:-$ ')
+                if (event.key == 'Enter') {
+
+                    $(this).css('height', 'min-content')
+
+                    $(this).prop('disabled', true)
+                    $('.window-system2024').find('.therest').append(`<div class="stdin" style="display: flex;flex-direction:column;"><input type='text' style="background: transparent;border: 0;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="stdii"></div></div>`)
+                    $('.window-system2024').find('.stdii').last().val('hello@loai:-$ ')
                     inputtrap()
-                    
+
                     let len = $(this).val().split('hello@loai:-$ ')[1]
+                    console.log($(this).val())
                     let list = len.split(' ')
                     let first = list.shift()
+                    
                     list = list.join(' ')
+                    console.log(first,list)
                     list = [first, list]
+                    console.log(list)
+                    console.log(first)
                     let fet = await fetch(`./applications/terminal/terminal-tools/${list[0]}.jst`)
                     let text = await fet.text()
                     text = text.replaceAll('terminal-params', `"${list[1]}"`)
@@ -62,15 +66,71 @@
 
                     eval(text)
                     inputting()
-                    
-                    
-                    
+
+
+
                 }
             })
         }
-        function inputtrap(){
+        function increase() {
+            $('.window-system2024').find('.stdii-continue').off('keydown').on('keydown', async function (event) {
+                if ($(this).scrollLeft() > 0) {
+
+                    $(this).closest('.stdin').append(`<input type='text' style="background: transparent;border: 0;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="stdii-continue">`)
+                    $('.window-system2024').find('.stdii-continue').last().focus()
+
+                    increase()
+
+                }
+                console.log($(this).val().length)
+                if (event.key == 'Backspace' && $(this).val().length <= 1) {
+                    let index = $(this).closest('.stdin').find('.stdii-continue').index($(this))
+
+                    if (index == 0) { $(this).closest('.stdin').find('.stdii').focus(); console.log(true) } else { $('.stdii-continue')[index - 1].focus() }
+                    // easy
+                    $(this).remove()
+                }
+                if (event.key == 'Enter') {
+                    let list = []
+                    $('.window-system2024').find('.therest').append(`<div class="stdin" style="display: flex;flex-direction:row;"><input type='text' style="background: transparent;border: 0;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="stdii"></div></div>`)
+                    $('.window-system2024').find('.stdii').last().val('hello@loai:-$ ')
+                    $('.window-system2024').find('.stdii').last().focus()
+                    $(this).closest('.stdin').find('.stdii-continue').toArray().forEach((e) => { list.push(e.value) })
+                    list = list.join('')
+                    let fst = $(this).closest('.stdin').find('.stdii').val().split('hello@loai:-$ ')
+                    fst.shift()
+                    fst = `${fst.join('')}${list}`
+                    let terminalpar = fst.split(' ')
+                    let term = terminalpar.shift()
+                    terminalpar = terminalpar.join(' ')
+                    terminalpar = [term, terminalpar]
+
+                        console.log(terminalpar[0])
+                        let fet = await fetch(`./applications/terminal/terminal-tools/${terminalpar[0]}.jst`)
+                        if(!fet.ok){console.log(true)}
+                        let text = await fet.text()
+                        text = text.replaceAll('terminal-params', `"${terminalpar[1]}"`)
+
+
+                        eval(text)
+
+                    inputting()
+
+
+                }
+            })
+        }
+        function inputtrap() {
             $('.window-system2024').find('.stdii').off('input').on('input', function (event) {
-                console.log(true, $(this).scrollLeft())
+                let len = $(this).val().split('hello@loai:-$ ')
+                console.log(len)
+
+                if ($(this).scrollLeft() > 0) {
+                    $(this).closest('.stdin').append(`<input type='text' style="background: transparent;border: 0;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="stdii-continue">`)
+                    $('.window-system2024').find('.stdii-continue').last().focus()
+                    increase()
+                }
+
 
                 if (len.length < 2) {
                     setTimeout(() => {
@@ -81,11 +141,11 @@
 
             })
         }
-        function append_to_window(create,point,html){
-            if(create == true){
+        function append_to_window(create, point, html) {
+            if (create == true) {
                 $('.window-system2024').append(point)
 
-            }else{
+            } else {
                 $('.window-system2024').find(point).append(html)
 
             }

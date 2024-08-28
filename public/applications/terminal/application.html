@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="therest" style="
-    height: 95%;
+    height: calc(100% - 20px);
     overflow: hidden;
     overflow-y: scroll;
     background: rgba(0, 0, 0, 0.6);
@@ -46,7 +46,8 @@
 
                     $(this).prop('disabled', true)
                     $('.window-system2024').find('.therest').append(`<div class="stdin" style="display: flex;flex-direction:column;"><input type='text' style="background: transparent;border: 0;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="stdii"></div></div>`)
-                    $('.window-system2024').find('.stdii').last().val('hello@loai:-$ ')
+                    $('.window-system2024').find('.stdii').last().val('hello@loai:-$ ').focus()
+
                     inputtrap()
 
                     let len = $(this).val().split('hello@loai:-$ ')[1]
@@ -64,8 +65,11 @@
                     text = text.replaceAll('terminal-params', `"${list[1]}"`)
 
 
-                    eval(text)
+                    try{eval(text)}catch{console.log('error in catching response 404!')}
+                    console.log('running throw error default -00')
+                    
                     inputting()
+                    inputtrap()
 
 
 
@@ -107,13 +111,13 @@
 
                         console.log(terminalpar[0])
                         let fet = await fetch(`./applications/terminal/terminal-tools/${terminalpar[0]}.jst`)
-                        if(!fet.ok){console.log(true)}
+                        
                         let text = await fet.text()
                         text = text.replaceAll('terminal-params', `"${terminalpar[1]}"`)
 
 
                         eval(text)
-
+                    console.log('running throw error default -00')
                     inputting()
 
 

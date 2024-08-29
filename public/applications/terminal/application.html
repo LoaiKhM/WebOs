@@ -38,10 +38,11 @@
     </div>
 
     <script class="application-script">
-        $('.window-system2024').contextmenu(function(e){
+        $(document).on('contextmenu','.window-system2024',function(e){
             e.preventDefault() 
-            console.log(e.clientX,e.clientY)
-            // $('.window-system2024').append(`<div style='position:fixed;top:${e.clientY};left:'${e.clientY}'>`)
+            alert()
+            console.log(e.offsetY,e.offsetX)
+            $('.window-system2024').append(`<div class='dss' style='position:relative;top:${e.clientY}px;left:${e.clientX}px;height:300px;width:300px;background:black;'>loai</div>`)
         })
 
         async function importTerminal() {

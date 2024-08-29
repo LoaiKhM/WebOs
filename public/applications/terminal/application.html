@@ -38,6 +38,12 @@
     </div>
 
     <script class="application-script">
+        $('.window-system2024').contextmenu(function(e){
+            e.preventDefault() 
+            console.log(e.clientX,e.clientY)
+            // $('.window-system2024').append(`<div style='position:fixed;top:${e.clientY};left:'${e.clientY}'>`)
+        })
+
         async function importTerminal() {
             let terminalImport = await fetch('./applications/terminal/terminal-tools/terminal-init.json')
             terminalImport = await terminalImport.json()
@@ -48,18 +54,24 @@
         }
         async function main_window() {
             let terminal_fi = await importTerminal()
+            function add_line() {
+                $('.window-system2024').find('.therest').append(`<div class="stdin" style="display: flex;flex-direction:column;"><input type='text' style="background: transparent;border: 0;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="stdii"></div></div>`)
+                $('.window-system2024').find('.stdii').last().val(terminal_fi).focus()
+                inputtrap()
+                inputting()
+            }
             function inputting() {
                 inputtrap()
                 $('.window-system2024').find('.stdii').off('keydown').on('keydown', async function (event) {
+
                     if (event.key == 'Enter') {
 
                         $(this).css('height', 'min-content')
 
                         $(this).prop('disabled', true)
-                        $('.window-system2024').find('.therest').append(`<div class="stdin" style="display: flex;flex-direction:column;"><input type='text' style="background: transparent;border: 0;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="stdii"></div></div>`)
-                        $('.window-system2024').find('.stdii').last().val(terminal_fi).focus()
 
-                        inputtrap()
+
+
 
                         let len = $(this).val().split(terminal_fi)[1]
                         console.log($(this).val())
@@ -75,8 +87,8 @@
                         let text = await fet.text()
                         text = text.replaceAll('terminal-params', `"${list[1]}"`)
 
-
-                        try { eval(text) } catch { console.log('error in catching response 404!') }
+                        $('.stdii').off('input')
+                        try { eval(text) } catch { console.log('error in catching response 404!'); add_line() }
                         console.log('running throw error default -00')
 
                         // inputting()
@@ -107,9 +119,6 @@
                     }
                     if (event.key == 'Enter') {
                         let list = []
-                        $('.window-system2024').find('.therest').append(`<div class="stdin" style="display: flex;flex-direction:row;"><input type='text' style="background: transparent;border: 0;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="stdii"></div></div>`)
-                        $('.window-system2024').find('.stdii').last().val(terminal_fi)
-                        $('.window-system2024').find('.stdii').last().focus()
                         $(this).closest('.stdin').find('.stdii-continue').toArray().forEach((e) => { list.push(e.value) })
                         list = list.join('')
                         let fst = $(this).closest('.stdin').find('.stdii').val().split(terminal_fi)
@@ -127,7 +136,7 @@
                         text = text.replaceAll('terminal-params', `"${terminalpar[1]}"`)
 
 
-                        try{eval(text)}catch{console.log('error')}
+                        try { eval(text) } catch { console.log('error'); add_line() }
                         console.log('running throw error default -00')
                         // inputting()
 

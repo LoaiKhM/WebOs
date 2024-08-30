@@ -12,7 +12,10 @@ async function editinfo(){
                 }
 
     await fetch('/',{method :'POST',headers:{'Content-Type' : 'application/json'},body:JSON.stringify({nwJSN : nwJSN , serv : 'terminal-req'})})
-    append_to_window(false,STDP,`<h6 style='font-family:sans-serif;color:white;font-size:18px; letter-spacing:3px; padding:0;margin:2px 0 2px 0;'>PC : ${pc} <br>USER : ${user}</h6>`)
-    add_line()
+    append_to_window(STDP,'white','',`New username  : ${user}\nNew PC Name  : ${pc}\nPress Any Key To Reboot Your Terminal`)
+    $(winID).on('click',function(){
+        $(winID).off('click')
+        $(this).remove()
+    })
 }
 editinfo()

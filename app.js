@@ -42,11 +42,12 @@ app.get('/', async (req, res) => {
 })
 app.post('/',async (req,res)=>{
 
-    
+    console.log('done')
     const getApplication0123 = require('./public/applications/fileloading/serverside')
     const terminal_application = require('./public/applications/terminal/application')
     getApplication0123(req,res,pat,fs)
-    terminal_application(req,res)
+    terminal_application(req,res,fs)
+    
 
 })
 process.on('uncaughtException', function (error, orgin) {

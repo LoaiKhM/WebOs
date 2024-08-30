@@ -38,151 +38,154 @@
     </div>
 
     <script class="application-script">
-        let STDP;
+        function cont() {
+            let STDP;
 
-        $(document).on('contextmenu','.window-system2024',function(e){
-            e.preventDefault() 
-            $('.dss').remove()
-            console.log(e.offsetY,e.offsetX)
-            $(document).off('mousedown.dragging').on('mousedown.dragging',function(){
+            $(document).on('contextmenu', '.window-system2024', function (e) {
+                e.preventDefault()
                 $('.dss').remove()
-            
+                console.log(e.offsetY, e.offsetX)
+                $(document).off('mousedown.dragging').on('mousedown.dragging', function () {
+                    $('.dss').remove()
+
+                })
+                $('.window-system2024').append(`<div class='dss' style='position:fixed;top:${e.clientY}px;left:${e.clientX}px;height:300px;width:300px;background:black;'>loai</div>`)
+
             })
-            $('.window-system2024').append(`<div class='dss' style='position:fixed;top:${e.clientY}px;left:${e.clientX}px;height:300px;width:300px;background:black;'>loai</div>`)
-            
-        })
 
-        async function importTerminal() {
-            let terminalImport = await fetch('./applications/terminal/terminal-tools/terminal-init.json')
-            terminalImport = await terminalImport.json()
+            async function importTerminal() {
+                let terminalImport = await fetch('./applications/terminal/terminal-tools/terminal-init.json')
+                terminalImport = await terminalImport.json()
 
 
-            return `${terminalImport.pcname}@${terminalImport.username}:-$ `
+                return `${terminalImport.pcname}@${terminalImport.username}:-$ `
 
-        }
-        async function main_window() {
-            let terminal_fi = await importTerminal()
-            function add_line() {
-                $('.window-system2024').find('.therest').append(`<div class="stdin" style="display: flex;flex-direction:column;"><input type='text' style="background: transparent;border: 0;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="stdii"></div></div>`)
-                $('.window-system2024').find('.stdii').last().val(terminal_fi).focus()
-                inputtrap()
-                inputting()
             }
-            function inputting() {
-                inputtrap()
-                $('.window-system2024').find('.stdii').off('keydown').on('keydown', async function (event) {
-
-                    if (event.key == 'Enter') {
-                        $(this).css('height', 'min-content')
-                        $(this).prop('disabled', true)
-                        let len = $(this).val().split(terminal_fi)[1]
-                        console.log($(this).val())
-                        let list = len.split(' ')
-                        let first = list.shift()
-                        list = list.join(' ')
-                        console.log(first, list)
-                        list = [first, list]
-                        console.log(list)
-                        console.log(first)
-                        let fet = await fetch(`./applications/terminal/terminal-tools/${list[0]}.jst`)
-                        let text = await fet.text()
-                        text = text.replaceAll('terminal-params', `"${list[1]}"`)
-                        $('.stdii').off('input')
-                        STDP = $(this).closest('.stdin')
-                        try { eval(text) } catch { console.log('error in catching response 404!'); add_line() }
-                        console.log('running throw error default -00')
-                        // inputting()
-                    }
-                })
-            }
-            function increase() {
-                $('.window-system2024').find('.stdii-continue').off('keydown').on('keydown', async function (event) {
-                    if ($(this).scrollLeft() > 0) {
-                        $(this).closest('.stdin').append(`<input type='text' style="background: transparent;border: 0;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="stdii-continue">`)
-                        $('.window-system2024').find('.stdii-continue').last().focus()
-                        increase()
-                    }
-                    console.log($(this).val().length)
-                    if (event.key == 'Backspace' && $(this).val().length <= 1) {
-                        let index = $(this).closest('.stdin').find('.stdii-continue').index($(this))
-
-                        if (index == 0) { $(this).closest('.stdin').find('.stdii').focus(); console.log(true) } else { $('.stdii-continue')[index - 1].focus() }
-                        // easy
-                        $(this).remove()
-                    }
-                    if (event.key == 'Enter') {
-                        let list = []
-                        $(this).closest('.stdin').find('.stdii-continue').toArray().forEach((e) => { list.push(e.value) })
-                        list = list.join('')
-                        let fst = $(this).closest('.stdin').find('.stdii').val().split(terminal_fi)
-                        fst.shift()
-                        fst = `${fst.join('')}${list}`
-                        let terminalpar = fst.split(' ')
-                        let term = terminalpar.shift()
-                        terminalpar = terminalpar.join(' ')
-                        terminalpar = [term, terminalpar]
-
-                        console.log(terminalpar[0])
-                        let fet = await fetch(`./applications/terminal/terminal-tools/${terminalpar[0]}.jst`)
-
-                        let text = await fet.text()
-                        text = text.replaceAll('terminal-params', `"${terminalpar[1]}"`)
-
-                        STDP = $(this).closest('.stdin')
-                        try { eval(text) } catch { console.log('error'); add_line() }
-                        console.log('running throw error default -00')
-                        // inputting()
-
-
-                    }
-                })
-            }
-            function inputtrap() {
-                $('.window-system2024').find('.stdii').off('input').on('input', function (event) {
-                    let len = $(this).val().split(terminal_fi)
-                    console.log(len)
-
-                    if ($(this).scrollLeft() > 0) {
-                        $(this).closest('.stdin').append(`<input type='text' style="background: transparent;border: 0;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="stdii-continue">`)
-                        $('.window-system2024').find('.stdii-continue').last().focus()
-                        increase()
-                    }
-
-
-                    if (len.length < 2) {
-                        setTimeout(() => {
-                            $(this).val(terminal_fi)
-
-                        }, 1);
-                    }
-
-                })
-            }
-            function append_to_window(nofind, point, html) {
-                if (nofind == true) {
-                    $('.window-system2024').append(point)
-
-                } else {
-                    $('.window-system2024').find(point).append(html)
-
+            async function main_window() {
+                let terminal_fi = await importTerminal()
+                function add_line() {
+                    $('.window-system2024').find('.therest').append(`<div class="stdin" style="display: flex;flex-direction:column;"><input type='text' style="background: transparent;border: 0;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="stdii"></div></div>`)
+                    $('.window-system2024').find('.stdii').last().val(terminal_fi).focus()
+                    inputtrap()
+                    inputting()
                 }
-            }
+                function inputting() {
+                    inputtrap()
+                    $('.window-system2024').find('.stdii').off('keydown').on('keydown', async function (event) {
 
-            function window() {
+                        if (event.key == 'Enter') {
+                            $(this).css('height', 'min-content')
+                            $(this).prop('disabled', true)
+                            let len = $(this).val().split(terminal_fi)[1]
+                            console.log($(this).val())
+                            let list = len.split(' ')
+                            let first = list.shift()
+                            list = list.join(' ')
+                            console.log(first, list)
+                            list = [first, list]
+                            console.log(list)
+                            console.log(first)
+                            let fet = await fetch(`./applications/terminal/terminal-tools/${list[0]}.jst`)
+                            let text = await fet.text()
+                            text = text.replaceAll('terminal-params', `"${list[1]}"`)
+                            $('.stdii').off('input')
+                            STDP = $(this).closest('.stdin')
+                            try { eval(text) } catch { console.log('error in catching response 404!'); add_line() }
+                            console.log('running throw error default -00')
+                            // inputting()
+                        }
+                    })
+                }
+                function increase() {
+                    $('.window-system2024').find('.stdii-continue').off('keydown').on('keydown', async function (event) {
+                        if ($(this).scrollLeft() > 0) {
+                            $(this).closest('.stdin').append(`<input type='text' style="background: transparent;border: 0;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="stdii-continue">`)
+                            $('.window-system2024').find('.stdii-continue').last().focus()
+                            increase()
+                        }
+                        console.log($(this).val().length)
+                        if (event.key == 'Backspace' && $(this).val().length <= 1) {
+                            let index = $(this).closest('.stdin').find('.stdii-continue').index($(this))
 
-                function disable_backspace(event) {
+                            if (index == 0) { $(this).closest('.stdin').find('.stdii').focus(); console.log(true) } else { $('.stdii-continue')[index - 1].focus() }
+                            // easy
+                            $(this).remove()
+                        }
+                        if (event.key == 'Enter') {
+                            let list = []
+                            $(this).closest('.stdin').find('.stdii-continue').toArray().forEach((e) => { list.push(e.value) })
+                            list = list.join('')
+                            let fst = $(this).closest('.stdin').find('.stdii').val().split(terminal_fi)
+                            fst.shift()
+                            fst = `${fst.join('')}${list}`
+                            let terminalpar = fst.split(' ')
+                            let term = terminalpar.shift()
+                            terminalpar = terminalpar.join(' ')
+                            terminalpar = [term, terminalpar]
 
-                    if (event.key == 'Backspace') {
-                        event.preventDefault()
+                            console.log(terminalpar[0])
+                            let fet = await fetch(`./applications/terminal/terminal-tools/${terminalpar[0]}.jst`)
+
+                            let text = await fet.text()
+                            text = text.replaceAll('terminal-params', `"${terminalpar[1]}"`)
+
+                            STDP = $(this).closest('.stdin')
+                            try { eval(text) } catch { console.log('error'); add_line() }
+                            console.log('running throw error default -00')
+                            // inputting()
+
+
+                        }
+                    })
+                }
+                function inputtrap() {
+                    $('.window-system2024').find('.stdii').off('input').on('input', function (event) {
+                        let len = $(this).val().split(terminal_fi)
+                        console.log(len)
+
+                        if ($(this).scrollLeft() > 0) {
+                            $(this).closest('.stdin').append(`<input type='text' style="background: transparent;border: 0;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="stdii-continue">`)
+                            $('.window-system2024').find('.stdii-continue').last().focus()
+                            increase()
+                        }
+
+
+                        if (len.length < 2) {
+                            setTimeout(() => {
+                                $(this).val(terminal_fi)
+
+                            }, 1);
+                        }
+
+                    })
+                }
+                function append_to_window(nofind, point, html) {
+                    if (nofind == true) {
+                        $('.window-system2024').append(point)
+
+                    } else {
+                        $('.window-system2024').find(point).append(html)
+
                     }
                 }
-                $('.window-system2024').find('.stdii').val(terminal_fi)
-                // inputtrap()
-                inputting()
 
+                function window() {
+
+                    function disable_backspace(event) {
+
+                        if (event.key == 'Backspace') {
+                            event.preventDefault()
+                        }
+                    }
+                    $('.window-system2024').find('.stdii').val(terminal_fi)
+                    // inputtrap()
+                    inputting()
+
+                }
+                window()
             }
-            window()
+            main_window()
         }
-        main_window()
+        cont()
     </script>
 </section>

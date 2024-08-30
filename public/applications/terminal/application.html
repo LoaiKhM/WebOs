@@ -39,6 +39,10 @@
 
     <script class="application-script">
         function cont() {
+            function append_input(){
+                $('.stdin').last().append(`<input type='text' style="background: transparent;border: 0;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="stdii-continue">`)
+                $('.window-system2024').find('.stdii-continue').last().focus()
+            }
             let STDP;
 
             $(document).on('contextmenu', '.window-system2024', function (e) {
@@ -76,7 +80,7 @@
                         if (event.key == 'Enter') {
                             $(this).css('height', 'min-content')
                             $(this).prop('disabled', true)
-                            let len = $(this).val().split(terminal_fi)[1]
+                            let len = $(this).val().trim().split(terminal_fi)[1]
                             console.log($(this).val())
                             let list = len.split(' ')
                             let first = list.shift()
@@ -92,7 +96,7 @@
                             console.log(text)
                             $('.stdii').off('input')
                             STDP = $(this).closest('.stdin')
-                            try { eval(text)
+                            try { eval(text)}catch(e){console.log(e);add_line()}
                             console.log('running throw error default -00')
                             // inputting()
                         }
@@ -117,7 +121,7 @@
                             let list = []
                             $(this).closest('.stdin').find('.stdii-continue').toArray().forEach((e) => { list.push(e.value) })
                             list = list.join('')
-                            let fst = $(this).closest('.stdin').find('.stdii').val().split(terminal_fi)
+                            let fst = $(this).closest('.stdin').find('.stdii').val().trim().split(terminal_fi)
                             fst.shift()
                             fst = `${fst.join('')}${list}`
                             let terminalpar = fst.split(' ')
@@ -136,7 +140,7 @@
 
 
                             STDP = $(this).closest('.stdin')
-                            try { eval(text) } catch { console.log('error'); add_line() }
+                            try { eval(text)}catch(e){console.log(e);add_line()}
                             console.log('running throw error default -00')
                             // inputting()
 
@@ -146,7 +150,7 @@
                 }
                 function inputtrap() {
                     $('.window-system2024').find('.stdii').off('input').on('input', function (event) {
-                        let len = $(this).val().split(terminal_fi)
+                        let len = $(this).val().trim().split(terminal_fi)
                         console.log(len)
 
                         if ($(this).scrollLeft() > 0) {
@@ -167,7 +171,7 @@
                 }
                 function append_to_window(point,color,bgcolor,msg) {
 
-                        $('.window-system2024').find(point).append(`<h6 style='color:${color};background-color:${bgcolor};font-family:Sans-serif;font-size:18px;letter-spacing:3px;'>${msg.replace('\n','<br>')}</h6>`)
+                        $('.window-system2024').find(point).append(`<h6 style='color:${color};background-color:${bgcolor};font-family:Sans-serif;font-size:18px;letter-spacing:2px;'>${msg.replaceAll('\n','<br>')}</h6>`)
 
                     
                 }

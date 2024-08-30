@@ -1,6 +1,8 @@
 let terminalparams = terminal-params;
 let sp = terminalparams.split(' ')
-
+console.log(sp.length,false)
+sp.length >= 2 ? sp = sp : sp = ['PC','Root'];
+console.log(sp,true)
 let user = sp[1]
 let pc = sp[0]
 console.log(pc, user)
@@ -12,10 +14,11 @@ async function editinfo(){
                 }
 
     await fetch('/',{method :'POST',headers:{'Content-Type' : 'application/json'},body:JSON.stringify({nwJSN : nwJSN , serv : 'terminal-req'})})
-    append_to_window(STDP,'white','',`New username  : ${user}\nNew PC Name  : ${pc}\nPress Any Key To Reboot Your Terminal`)
-    $(winID).on('click',function(){
-        $(winID).off('click')
-        $(this).remove()
+    append_to_window(STDP,'white','',`New username  : ${user}\nNew PC Name  : ${pc}\nPress Any Key To Reboot The Terminal`)
+    append_input()
+    $('.stdii-continue').last().off('keydown').on('keydown',function(){
+        $('.stdii-continue').last().off('keydown')
+        $(winID).remove()
     })
 }
 editinfo()

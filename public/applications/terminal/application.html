@@ -38,11 +38,18 @@
     </div>
 
     <script class="application-script">
+        let STDP;
+
         $(document).on('contextmenu','.window-system2024',function(e){
             e.preventDefault() 
-            alert()
+            $('.dss').remove()
             console.log(e.offsetY,e.offsetX)
-            $('.window-system2024').append(`<div class='dss' style='position:relative;top:${e.clientY}px;left:${e.clientX}px;height:300px;width:300px;background:black;'>loai</div>`)
+            $(document).off('mousedown.dragging').on('mousedown.dragging',function(){
+                $('.dss').remove()
+            
+            })
+            $('.window-system2024').append(`<div class='dss' style='position:fixed;top:${e.clientY}px;left:${e.clientX}px;height:300px;width:300px;background:black;'>loai</div>`)
+            
         })
 
         async function importTerminal() {
@@ -66,19 +73,12 @@
                 $('.window-system2024').find('.stdii').off('keydown').on('keydown', async function (event) {
 
                     if (event.key == 'Enter') {
-
                         $(this).css('height', 'min-content')
-
                         $(this).prop('disabled', true)
-
-
-
-
                         let len = $(this).val().split(terminal_fi)[1]
                         console.log($(this).val())
                         let list = len.split(' ')
                         let first = list.shift()
-
                         list = list.join(' ')
                         console.log(first, list)
                         list = [first, list]
@@ -87,28 +87,20 @@
                         let fet = await fetch(`./applications/terminal/terminal-tools/${list[0]}.jst`)
                         let text = await fet.text()
                         text = text.replaceAll('terminal-params', `"${list[1]}"`)
-
                         $('.stdii').off('input')
+                        STDP = $(this).closest('.stdin')
                         try { eval(text) } catch { console.log('error in catching response 404!'); add_line() }
                         console.log('running throw error default -00')
-
                         // inputting()
-
-
-
-
                     }
                 })
             }
             function increase() {
                 $('.window-system2024').find('.stdii-continue').off('keydown').on('keydown', async function (event) {
                     if ($(this).scrollLeft() > 0) {
-
                         $(this).closest('.stdin').append(`<input type='text' style="background: transparent;border: 0;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="stdii-continue">`)
                         $('.window-system2024').find('.stdii-continue').last().focus()
-
                         increase()
-
                     }
                     console.log($(this).val().length)
                     if (event.key == 'Backspace' && $(this).val().length <= 1) {
@@ -136,7 +128,7 @@
                         let text = await fet.text()
                         text = text.replaceAll('terminal-params', `"${terminalpar[1]}"`)
 
-
+                        STDP = $(this).closest('.stdin')
                         try { eval(text) } catch { console.log('error'); add_line() }
                         console.log('running throw error default -00')
                         // inputting()
@@ -166,8 +158,8 @@
 
                 })
             }
-            function append_to_window(create, point, html) {
-                if (create == true) {
+            function append_to_window(nofind, point, html) {
+                if (nofind == true) {
                     $('.window-system2024').append(point)
 
                 } else {

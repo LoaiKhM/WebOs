@@ -18,6 +18,28 @@ $(document).ready(function () {
     })
 
 })
+async function openApplication(path){
+
+    const ext = await fetch(path)
+    const resp = await ext.text()
+    let pid = Date.now() + 100
+    let rep = resp.replaceAll('.window-system2024',`window-${pid}`)
+    console.log(rep)
+    pids.push(pid)
+    $(".desktop-system-0123").append(rep)
+    $('.window-system2024').attr('class',`window-${pid}`)
+    
+    const width = $(`.window-${pid}`).last().data('width')
+    const height = $(`.window-${pid}`).last().data('height')
+    console.log(`.window-${pid}`)
+    const top = $(`.window-${pid}`).last().data('top')
+    const left = $(`.window-${pid}`).last().data('left')
+    console.log(true  ,false, width,height)
+    $(`.window-${pid}`).last().css('height',height)
+    $(`.window-${pid}`).last().css('width',width)
+    $(`.window-${pid}`).last().css('top',top)
+    $(`.window-${pid}`).last().css('left',left)
+}
 $(document).on('click','.application-system-0123',async function(){
 
     const path = $(this).data('path')
@@ -27,7 +49,7 @@ $(document).on('click','.application-system-0123',async function(){
     let rep = resp.replaceAll('.window-system2024',`window-${pid}`)
     pids.push(pid)
     $(".desktop-system-0123").append(rep)
-    $('.window-system2024').attr('class',`.window-${pid}`)
+    $('.window-system2024').attr('class',`window-${pid}`)
     
     const width = $(`.window-${pid}`).last().data('width')
     const height = $(`.window-${pid}`).last().data('height')
@@ -52,7 +74,7 @@ $(document).on('click','.application',async function(){
 
 
     $(".desktop-system-0123").append(rep)
-    $('.window-system2024').attr('class',`.window-${pid}`)
+    $('.window-system2024').attr('class',`window-${pid}`)
     
     const width = $(`.window-${pid}`).last().data('width')
     const height = $(`.window-${pid}`).last().data('height')

@@ -1,7 +1,7 @@
 async function getApplication0123(req, res, pat, fs) {
     let serv = req.body.serv
+    console.log('hello server side application mother fucker')
     if (serv == 0) {
-        console.log('done server')
         let path = req.body.path
         path = path.split(',')
 

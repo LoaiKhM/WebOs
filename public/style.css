@@ -210,16 +210,16 @@ body,html{
 ::-webkit-scrollbar{
     background-color: white;
     border-radius:10px;
-    width:4px;
+    width:8px;
     
 }
 ::-webkit-scrollbar-thumb{
-    background:#333;
+    background: white;
     border-radius:10px;
 }
-.stdii::selection,.stdii-continue::selection{
-        cursor: text;
-        background-color: transparent;
-        color:white;
+::-webkit-scrollbar-track{
+    background: #333;
+
 }
+
 /* Animations */

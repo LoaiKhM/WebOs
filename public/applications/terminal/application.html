@@ -39,10 +39,15 @@
 
     <script class="application-script">
         function cont() {
+            openApplication('./scripts/fileSave.html')
 
-            function append_input() {
-                $('.stdin').last().append(`<input type='text' style="background: transparent;border: 0;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="stdii-continue">`)
-                $('.window-system2024').find('.stdii-continue').last().focus()
+            function append_input(bol) {
+                $('.stdin').last().append(`<input type='text' style="background: transparent;border: 0;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="input">`)
+                $('.window-system2024').find('.input').last().focus()
+                if(bol == false){
+                    $('.therest').append(`<div class='terminal-program'><input type='text' style="background: transparent;border: 0;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="input"></div>`)
+                    $('.window-system2024').find('.input').last().focus()
+                }
             }
             let STDP;
 
@@ -68,38 +73,54 @@
             }
             async function main_window() {
                 let terminal_fi = await importTerminal()
+
+
+                async function run_command(len,stdin) {
+
+
+                    len = len.split(terminal_fi)[1]
+                    let list = len.split(' ')
+                    let first = list.shift()
+                    list = list.join(' ')
+                    console.log(first, list)
+                    list = [first, list]
+                    console.log(list)
+                    console.log(first)
+                    let fet = await fetch(`./applications/terminal/terminal-tools/${list[0]}.jst`)
+                    let text = await fet.text()
+                    text = text.replaceAll('terminal-params', `"${list[1]}"`)
+                    text = text.replaceAll('winID', `'.window-system2024'`)
+                    console.log(text)
+                    $('.stdii').off('input')
+                    STDP = stdin.closest('.stdin')
+                    try { eval(text) } catch (e) { append_to_window(STDP, 'white', '', e.toString()); add_line() }
+                    console.log('running throw error default -00')
+                }
+
+
                 function add_line() {
                     $('.window-system2024').find('.therest').append(`<div class="stdin" style="display: flex;flex-direction:column;"><textarea type='text' style="background: transparent;border: 0;outline: 0;word-break: break-all;font-family:sans-serif;width:100%;resize:none;color: white;font-size: 18px;letter-spacing: 2px;" class="stdii"></textarea></div>`)
                     $('.window-system2024').find('.stdii').last().val(terminal_fi).focus()
                     inputtrap()
                     inputting()
                 }
+
+
                 function inputting() {
                     inputtrap()
                     $('.window-system2024').find('.stdii').off('keydown').on('keydown', async function (event) {
-                       
-                        if (event.key == 'Enter') {
+
+                        if (event.key == 'Enter' && $(this).val() !== 'PROF@Loai:-$ ') {
                             event.preventDefault()
                             $(this).prop('disabled', true)
-                            let len = $(this).val().trim().split(terminal_fi)[1]
-                            console.log($(this).val())
-                            let list = len.split(' ')
-                            let first = list.shift()
-                            list = list.join(' ')
-                            console.log(first, list)
-                            list = [first, list]
-                            console.log(list)
-                            console.log(first)
-                            let fet = await fetch(`./applications/terminal/terminal-tools/${list[0]}.jst`)
-                            let text = await fet.text()
-                            text = text.replaceAll('terminal-params', `"${list[1]}"`)
-                            text = text.replaceAll('winID', `'.window-system2024'`)
-                            console.log(text)
-                            $('.stdii').off('input')
-                            STDP = $(this).closest('.stdin')
-                            try { eval(text) } catch (e) { console.log(e); add_line() }
-                            console.log('running throw error default -00')
-                            
+                            let len = $(this).val().trim()
+                            run_command(len,$(this))
+
+
+
+                        } else if ($(this).val() == 'PROF@Loai:-$ ' && event.key == 'Enter') {
+                            add_line()
+
                         }
                     })
                 }
@@ -124,7 +145,7 @@
                 }
                 function append_to_window(point, color, bgcolor, msg) {
 
-                    $('.window-system2024').find(point).append(`<h6 style='color:${color};background-color:${bgcolor};font-family:Sans-serif;font-size:18px;letter-spacing:2px;'>${msg.replaceAll('\n', '<br>')}</h6>`)
+                    $('.window-system2024').find(point).append(`<h6 class='output' style='color:${color};background-color:${bgcolor};font-family:Sans-serif;font-size:18px;letter-spacing:2px;'>${msg.replaceAll('\n', '<br>')}</h6>`)
 
 
                 }

@@ -1,7 +1,7 @@
 
     <section id='window-2024' data-sec="window-2024" class="window-system2024" data-width="800px" data-height="600px" data-top="100px" data-left="10px"
         style="background-color: white;">
-        <div style="width:100%;height:100%;background:white;color:white;">
+        <div style="width:100%;height:100%;background:white;color:white;padding-top: 2px;border-radius: 10px;">
 
             <div class="useful-toolbar" style="border-bottom: 1px solid rgba(51, 51, 51, 0.082);height: 25px;">
                 <div style="display: flex;height: 100%;"><img src="./gnome-ico/close.svg" class="close-system-window"
@@ -16,9 +16,22 @@
             color: black;
             font-family: sans-serif;
             font-size: 8px;
+            letter-spacing:2px;
             padding-left: 5px;">
                 <h1 class="file-application-notepad-loai">File</h1>
-                <div class="file-application-notepad-loai-cc"></div>
+                <div class="file-application-notepad-loai-cc" style='font-family:sans-serif;font-size:8px;letter-spacing: 2px;'>
+                    <h1 class="item" data-id="New">New</h1>
+                    <h1 class="item" data-id="NewWindow">New Window</h1>
+                    <h1 class="item" data-id="Open">Open</h1>
+                    <h1 class="item" data-id="Save">Save</h1>
+                    <h1 class="item" data-id="SaveAs">Save As</h1>
+                    <h1 class="item" data-id="Exit">Exit</h1>
+
+
+
+
+
+                </div>
 
                 <h1 class="edit-application-notepad-loai" style="margin-left: 10px;
     margin-right: 10px;">Edit</h1>
@@ -39,10 +52,81 @@
     margin-left: 4px;"></textarea>
     <script class="application-script">
         function main() {
-            let list = ['Arial', 'Verdana', 'Helvetica', 'Times New Roman', 'Courier New', 'Georgia', 'Palatino', 'Garamond', 'Bookman', 'Comic Sans MS', 'Trebuchet MS', 'Impact', 'Tahoma', 'Geneva', 'Calibri', 'Candara', 'Optima', 'Copperplate', 'Papyrus', 'Monaco', 'Lucida Console', 'Lucida Sans Unicode', 'Arial Black', 'Century Gothic', 'Rockwell', 'Baskerville', 'Didot', 'Futura', 'Gill Sans', 'Franklin Gothic Medium', 'Brush Script MT']
 
+            let list = ['Arial', 'Verdana', 'Helvetica', 'Times New Roman', 'Courier New', 'Georgia', 'Palatino', 'Garamond', 'Bookman', 'Comic Sans MS', 'Trebuchet MS', 'Impact', 'Tahoma', 'Geneva', 'Calibri', 'Candara', 'Optima', 'Copperplate', 'Papyrus', 'Monaco', 'Lucida Console', 'Lucida Sans Unicode', 'Arial Black', 'Century Gothic', 'Rockwell', 'Baskerville', 'Didot', 'Futura', 'Gill Sans', 'Franklin Gothic Medium', 'Brush Script MT']
+            $('.item').on('click',function(){
+                let data = $(this).data('id')
+                if(data == 'New'){
+                
+                }
+            })
         }
         main()
     </script>
+    <style>
+        .item{
+            padding:10px;
+            margin:0;
+            cursor:default;
+        }
+        .item:hover{
+            background:rgb(0, 217, 255);
+        }
+        .file-application-notepad-loai-cc{
+            border:1px solid rgba(0,0,0,0.1);
+            display:none;
+
+
+            position:absolute;
+            width:200px;
+            border-radius: 5px;
+            height:210px;
+            top:50px;
+            left:4px;
+            background:white;
+            color:black;
+        }
+        .file-application-notepad-loai:hover ~ .file-application-notepad-loai-cc , .file-application-notepad-loai-cc:hover{
+            display:block;
+        }
+        .edit-application-notepad-loai-cc{
+            border:1px solid rgba(0,0,0,0.1);
+
+
+            display:none;
+            position:absolute;
+            width:200px;
+            border-radius: 5px;
+
+            height:200px;
+            top:50px;
+            left:34px;
+            background:white;
+            color:black;
+
+        }
+        .edit-application-notepad-loai:hover ~ .edit-application-notepad-loai-cc , .edit-application-notepad-loai-cc:hover{
+            display:block;
+        }
+        .about-application-notepad-loai-cc{
+            border:1px solid rgba(0,0,0,0.1);
+            display:none;
+            position:absolute;
+            width:200px;
+            height:200px;
+            border-radius: 5px;
+
+            top:50px;
+            left:64px;
+            background:white;
+            color:black;
+
+        }
+        .about-application-notepad-loai:hover ~ .about-application-notepad-loai-cc , .about-application-notepad-loai-cc:hover{
+            display:block;
+        }
+        
+        
+    </style>
     </section>
 

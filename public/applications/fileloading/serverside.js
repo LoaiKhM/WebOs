@@ -26,7 +26,7 @@ async function getApplication0123(req, res, pat, fs) {
             }
 
         }
-
+        console.log({ dir: dirlist, file: filelist, cwd: path })
         res.send({ dir: dirlist, file: filelist, cwd: path })
     }
 }

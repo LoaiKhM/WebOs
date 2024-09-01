@@ -1,5 +1,5 @@
-<section data-sec='window-2024' id='windowsystem2024s' class="window-system2024" data-width="800px" data-height="600px" data-top="100px" data-left="10px"
-    style="background-color: white;display:flex;z-index:102;">
+<section data-sec='window-2024' id='windowsystem2024s' class="window-system2024" data-width="600px" data-height="300px" data-top="100px" data-left="610px"
+    style="background-color: white;display:flex;z-index:1002;">
     <div style="width:100%;height:100%;background:white;color:white;">
 
         <div class="useful-toolbar" style="border-bottom: 1px solid rgba(51, 51, 51, 0.082);height: 25px;">
@@ -7,9 +7,9 @@
                     style="width: 14px !important;"></div>
             <!-- Change Your Title-->
             <p class="title-system-0123" style="color:black;">Save As</p>
-            <img src="./applications/fileloading/run.svg" class="appico-system-window-0123">
+            
         </div>
-        <div class="the-rest" style="overflow: auto;height: 96%;">
+        <div class="the-rest" style="overflow: auto;height: 84%;">
             <div class="movemento">
                 <div class="path"><img src="./applications/fileloading/goback.svg"
                         style="margin-left:2px;margin-right: 10px;" class="goback"><img src="./applications/fileloading/gofroward.svg"
@@ -82,6 +82,7 @@
             }
 
             async function first() {
+                console.log('.window-system2024')
                 let root = await getFolders(false,'./,')
                 let resp = await root.json()
                 cwd = resp.cwd

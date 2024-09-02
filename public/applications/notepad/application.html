@@ -49,15 +49,19 @@
     resize: none;
     outline: 0;
     border: 0;
-    margin-left: 4px;"></textarea>
+    margin-left: 4px;" class="noteit"></textarea>
     <script class="application-script">
         function main() {
-            message_pop('hello there','msg',$('.window-system2024'))
+            // message_pop('hello there','msg',$('.window-system2024'),()=>{alert('HELL')}) api for a first hello message for the notepad!
             let list = ['Arial', 'Verdana', 'Helvetica', 'Times New Roman', 'Courier New', 'Georgia', 'Palatino', 'Garamond', 'Bookman', 'Comic Sans MS', 'Trebuchet MS', 'Impact', 'Tahoma', 'Geneva', 'Calibri', 'Candara', 'Optima', 'Copperplate', 'Papyrus', 'Monaco', 'Lucida Console', 'Lucida Sans Unicode', 'Arial Black', 'Century Gothic', 'Rockwell', 'Baskerville', 'Didot', 'Futura', 'Gill Sans', 'Franklin Gothic Medium', 'Brush Script MT']
             $('.item').on('click',function(){
                 let data = $(this).data('id')
-                if(data == 'New'){
                 
+                if(data == 'New'){
+                    console.log()
+                    $('.window-system2024').find('.noteit').val('')
+                }else if(data == 'NewWindow'){
+                    openApplication('./applications/notepad/application.html')
                 }
             })
         }

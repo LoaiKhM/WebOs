@@ -20,16 +20,18 @@ $(document).ready(function () {
 })
 function message_pop(msg ,type ,window){
     let div;
+    alert()
     if(type == 'error'){
-        div = `<div>${msg}</div>`
+        div = `<div class='big' style='width:400px;border-radius:3px;height:250px;position:absolute;width:400px;height:200px; background:#fff;top:34%; left:calc(50% - 200px);box-shadow: 0px 0px 12px 1px;'><div class='useful-toolbar-pop'style='height:20px;width:400px;display:flex;align-items:center;justify-content:space-between;padding-left:2px;padding-top:3px;border-bottom:1px solid rgba(0,0,0,0.1);'><h1 style='font-size:14px;font-family:sans-serif;'>Error</h1><img src='./gnome-ico/close.svg' style='margin-right:2px;'></div><div style='display: flex;height:90%;justify-content: space-evenly;align-items: center;'><img src='./applications/notepad/error.svg' style='height:24px'><h1>Error : ${msg}</h1></div></div>`
 
     }else if(type == 'msg'){
-        div = `<div>${msg}</div>`
+        div = `<div class='big' style='width:400px;border-radius:3px;height:250px;position:absolute;width:400px;height:200px; background:#fff;top:34%; left:calc(50% - 200px);box-shadow: 0px 0px 12px 1px;'><div class='useful-toolbar-pop'style='height:20px;width:400px;display:flex;align-items:center;justify-content:space-between;padding-left:2px;padding-top:3px;border-bottom:1px solid rgba(0,0,0,0.1);'><h1 style='font-size:14px;font-family:sans-serif;'>Message</h1><img src='./gnome-ico/close.svg' style='margin-right:2px;'></div><div style='display: flex;height:90%;justify-content: space-evenly;align-items: center;'><img src='./applications/notepad/msg.svg' style='height:24px'><h1>Info : ${msg}</h1></div></div>`
 
     }else if(type == 'warn'){
-        div = `<div>${msg}</div>`
+        div = `<div class='big' style='width:400px;border-radius:3px;height:250px;position:absolute;width:400px;height:200px; background:#fff;top:34%; left:calc(50% - 200px);box-shadow: 0px 0px 12px 1px;'><div class='useful-toolbar-pop'style='height:20px;width:400px;display:flex;align-items:center;justify-content:space-between;padding-left:2px;padding-top:3px;border-bottom:1px solid rgba(0,0,0,0.1);'><h1 style='font-size:14px;font-family:sans-serif;'>Warning</h1><img src='./gnome-ico/close.svg' style='margin-right:2px;'></div><div style='display: flex;height:90%;justify-content: space-evenly;align-items: center;'><img src='./applications/notepad/warning.svg' style='height:24px'><h1>Warning : ${msg}</h1></div></div>`
 
     }
+    console.log(window)
     window.append(div)
 }
 async function openApplication(path){
@@ -123,7 +125,24 @@ $(document).on('mousedown', '.useful-toolbar', function(event) {
         $(document).off('mousemove.dragging');
     });
 });
+$(document).on('mousedown', '.useful-toolbar-pop', function(event) {
+    const toolbar = $(this); // Store reference to the .useful-toolbar element
+    const x = event.clientX - toolbar.offset().left;
+    const y = event.clientY - toolbar.offset().top;
 
+    $(document).on('mousemove.dragging', function(event) {
+
+        console.log(toolbar)
+        toolbar.closest('.big').css('position', `fixed`);
+        toolbar.closest('.big').css('top', `${event.clientY - y}px`);
+        toolbar.closest('.big').css('left', `${event.clientX - x}px`);
+    });
+
+    $(document).on('mouseup', function() {
+        
+        $(document).off('mousemove.dragging');
+    });
+});
 $(document).on('click','.close-system-window',function(){
 
     $(this).closest('script').remove()

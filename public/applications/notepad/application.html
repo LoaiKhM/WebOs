@@ -52,6 +52,9 @@
     margin-left: 4px;" class="noteit"></textarea>
     <script class="application-script">
         function main() {
+            
+            $('.file-application-notepad-loai-cc').addClass('done')
+
             // message_pop('hello there','msg',$('.window-system2024'),()=>{alert('HELL')}) api for a first hello message for the notepad!
             let list = ['Arial', 'Verdana', 'Helvetica', 'Times New Roman', 'Courier New', 'Georgia', 'Palatino', 'Garamond', 'Bookman', 'Comic Sans MS', 'Trebuchet MS', 'Impact', 'Tahoma', 'Geneva', 'Calibri', 'Candara', 'Optima', 'Copperplate', 'Papyrus', 'Monaco', 'Lucida Console', 'Lucida Sans Unicode', 'Arial Black', 'Century Gothic', 'Rockwell', 'Baskerville', 'Didot', 'Futura', 'Gill Sans', 'Franklin Gothic Medium', 'Brush Script MT']
             $('.item').on('click',function(){
@@ -59,9 +62,19 @@
                 
                 if(data == 'New'){
                     console.log()
-                    $('.window-system2024').find('.noteit').val('')
+                    $('.window-system2024').find('.noteit').val('').focus()
+                    $('.file-application-notepad-loai-cc').removeClass('done')
+                    setTimeout(()=>{
+                        $('.file-application-notepad-loai-cc').addClass('done')
+                    },50)
+                    
+
                 }else if(data == 'NewWindow'){
                     openApplication('./applications/notepad/application.html')
+                }else if(data == 'Exit'){
+                    $('.window-system2024').remove()
+                }else if(data == 'SaveAs'){
+                    openApplication('./scripts/fileSave.html')
                 }
             })
         }
@@ -90,7 +103,7 @@
             background:white;
             color:black;
         }
-        .file-application-notepad-loai:hover ~ .file-application-notepad-loai-cc , .file-application-notepad-loai-cc:hover{
+        .file-application-notepad-loai:hover ~ .file-application-notepad-loai-cc.done , .file-application-notepad-loai-cc.done:hover{
             display:block;
         }
         .edit-application-notepad-loai-cc{

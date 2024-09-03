@@ -23,7 +23,7 @@
                     <h1 class="item" data-id="New">New</h1>
                     <h1 class="item" data-id="NewWindow">New Window</h1>
                     <h1 class="item" data-id="Open">Open</h1>
-                    <h1 class="item" data-id="Save">Save</h1>
+                    <h1 class="item" data-id="Save" data-save-b="false">Save</h1>
                     <h1 class="item" data-id="SaveAs">Save As</h1>
                     <h1 class="item" data-id="Exit">Exit</h1>
 
@@ -74,7 +74,7 @@
                 }else if(data == 'Exit'){
                     $('.window-system2024').remove()
                 }else if(data == 'SaveAs'){
-                    openApplication('./scripts/fileSave.html')
+                    openApplication('./scripts/fileSave.html' , $('.noteit').val())
                 }
             })
         }

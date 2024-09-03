@@ -28,6 +28,9 @@ async function getApplication0123(req, res, pat, fs) {
         }
         console.log({ dir: dirlist, file: filelist, cwd: path })
         res.send({ dir: dirlist, file: filelist, cwd: path })
+    }else if(serv == 'SaveFile-file-save'){
+        let {name , path, value} = req.body;
+        
     }
 }
 module.exports = getApplication0123

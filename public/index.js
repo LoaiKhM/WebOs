@@ -49,13 +49,14 @@ function message_pop(msg, type, window, handler) {
     console.log(window)
     
 }
-async function openApplication(path, passed_params) {
+async function openApplication(path, passed_params, parentwindow) {
 
     const ext = await fetch(path)
     const resp = await ext.text()
     let pid = Date.now() + 100
     let rep = resp.replaceAll('window-system2024', `window-${pid}`)
     rep = rep.replaceAll('passed_params', passed_params)
+    rep = rep.replace('parent-window-system0123', parentwindow || null)
 
     pids.push(pid)
     $(".desktop-system-0123").append(rep)

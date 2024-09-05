@@ -49,6 +49,7 @@ app.post('/',async (req,res)=>{
     const terminal_application = require('./public/applications/terminal/application')
     getApplication0123(req,res,pat,fs)
     terminal_application(req,res,fs)
+    
     // save(req,res,pat,fs)
     
 

@@ -1,5 +1,5 @@
 <section data-sec='window-2024' id='windowsystem2024s' class="window-system2024" data-width="600px" data-height="300px"
-    data-top="100px" data-left="610px" style="background-color: white;display:flex;z-index:1002;">
+    data-top="100px" data-left="610px" style="background-color: white;display:flex;z-index:1002;" data-parent-window="parent-window-system0123">
     <div style="width:100%;height:100%;background:white;color:white;">
 
         <div class="useful-toolbar" style="border-bottom: 1px solid rgba(51, 51, 51, 0.082);height: 25px;">
@@ -149,15 +149,15 @@
             $('.window-system2024').on('click', '[data-class="file"]', function (event) {
                 console.log('click');
 
-                $('.window-system2024').find('[data-class="file"]').find('p').find('b').css('background', 'transparent')
-                $('.window-system2024').find('[data-class="file"]').find('p').find('b').css('color', 'black')
+                $('.window-system2024').find('[data-class="file"]').css('background', 'transparent')
+                $('.window-system2024').find('[data-class="file"]').css('color', 'black')
 
 
 
-                $(this).find('p').find('b').css('background', '#00f')
+                $(this).css('background', 'rgb(0, 217, 255)')
 
-                $(this).find('p').find('b').css('color', 'white')
-                $(this).find('p').find('b').css('border-radius', '5px')
+                $(this).css('color', 'white')
+                $(this).css('border-radius', '5px')
 
 
 
@@ -300,13 +300,21 @@
             async function Saving(p,cwd , name) {
             
                 await fetch('/', { method: 'POST', headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ serv: 'SaveFile-file-save', value: p, path : cwd,name : name  }) })
+                $()
+            
             }
 
 
             $('.window-system2024').find('.save').on('click', async function () {
                 let name = $(this).closest('.namebar').find('.name').val()
                 console.log(name)
-                await Saving('passed_params', cwd , name)
+                await Saving(`passed_params`, cwd , name)
+                $('.window-system2024').remove()
+                let parent = $('.window-system2024').data('parent-window')
+                alert(parent)
+            })
+            $('.window-system2024').on('click','.cancel',function(){
+                $('.window-system2024').remove()
             })
         }
 

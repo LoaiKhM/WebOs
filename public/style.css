@@ -231,4 +231,8 @@ body,html{
     background:rgb(0, 217, 255);
 
 }
+body{
+    user-select:none;
+    
+}
 /* Animations */

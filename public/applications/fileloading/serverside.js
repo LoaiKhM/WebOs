@@ -30,6 +30,10 @@ async function getApplication0123(req, res, pat, fs) {
         res.send({ dir: dirlist, file: filelist, cwd: path })
     }else if(serv == 'SaveFile-file-save'){
         let {name , path, value} = req.body;
+        console.log(name, path, value)
+        await fs.writeFile(`${path}/${name}.txt`, value)
+        console.log('writed')
+        res.end()
         
     }
 }
